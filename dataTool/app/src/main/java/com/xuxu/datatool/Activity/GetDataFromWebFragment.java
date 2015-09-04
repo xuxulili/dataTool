@@ -163,7 +163,7 @@ public class GetDataFromWebFragment extends Fragment {
         initView();
         //此处为data为空值，由于是子线程，可能这个值并没有来得及改变
     }
-
+    //github操作完成
 
     @Override
     public void onStart() {
