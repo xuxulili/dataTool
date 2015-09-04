@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="@style/AppBaseTheme">
+        <item name="android:navigationBarColor">#4876FF</item>
+        <item name="colorPrimary">#3A5FCD</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <!-- 状态栏颜色 -->
+        <item name="colorPrimaryDark">#ff3a5fcd</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="AppBaseThemeTwo" parent="android:Theme.Material">
+        <item name="android:windowBackground">@color/transparent_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- toolbar（actionbar）颜色 -->
+        <item name="colorPrimary">#3A5FCD</item>
+        <!-- 状态栏颜色 -->
+        <item name="colorPrimaryDark">#ff3a5fcd</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <!-- 窗口的背景颜色 -->
+        <!-- SearchView -->
+        <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!--按钮选中或者点击获得焦点后的颜色-->
+        <item name="colorAccent">#ff0000</item>
+        <!--和 colorAccent相反，正常状态下按钮的颜色-->
+        <item name="colorControlNormal">#ff0000</item>
+
+        <!--Button按钮正常状态颜色-->
+        <item name="colorButtonNormal">@color/accent_material_light</item>
+        <!--EditText 输入框中字体的颜色-->
+        <item name="editTextColor">@android:color/white</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+
+
+    </style>
+</resources>

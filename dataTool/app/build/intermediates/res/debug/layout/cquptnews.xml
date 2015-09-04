@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:CircleProgressView="http://schemas.android.com/apk/res-auto"
+    xmlns:wheel="http://schemas.android.com/tools">
+    <com.xuxu.datatool.widget.AutoScrollTextView
+        android:id="@+id/TextViewNotice"
+        android:layout_height="20dp"
+        android:layout_width="fill_parent"
+        android:layout_gravity="center|bottom"
+        android:text="修德 博学 求实 创新 重庆邮电大学校训"
+        android:textColor="#ffffff"
+        android:inputType="text"
+        />
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!---->
+        <!-->-->
+        <!--<android.support.v4.widget.NestedScrollView-->
+            <!--android:layout_width="match_parent"-->
+
+            <!--android:layout_height="match_parent">-->
+        <com.xuxu.datatool.widget.RefreshLayout
+            android:id="@+id/swipe_refresh_cqupt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--<include layout="@layout/header"> </include>-->
+
+
+                <!--<com.xuxu.datatool.widget.UserListView-->
+                    <!--android:id="@+id/listView_cqupt"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"></com.xuxu.datatool.widget.UserListView>-->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <ListView
+                    android:id="@+id/listView_cqupt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></ListView>
+                    <LinearLayout
+                        android:id="@+id/progressLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="#ffffff"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/circleView"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:text="重邮主页不稳定，请耐心等待！"/>
+                        <!--<com.xuxu.datatool.widget.CircleProgressView-->
+
+                            <!--android:layout_width="110dp"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/circleView"-->
+                            <!--CircleProgressView:contourSize="0dp"-->
+                            <!--CircleProgressView:rimWidth="14dp"-->
+                            <!--CircleProgressView:barWidth="14dp"-->
+                            <!--CircleProgressView:showUnit="true"-->
+                            <!--CircleProgressView:unit="%"-->
+                            <!--CircleProgressView:barColor="#00796B"-->
+                            <!--CircleProgressView:rimColor="#B2DFDB"-->
+                            <!--CircleProgressView:unitColor="#009688"-->
+                            <!--CircleProgressView:textColor="#00796B"/>-->
+                        <com.pnikosis.materialishprogress.ProgressWheel
+                            android:id="@+id/progress_wheel"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:visibility="visible"
+                            android:layout_gravity="center"
+                            wheel:matProg_spinSpeed="1.2"
+                            wheel:matProg_barColor="?attr/colorPrimary"
+                            wheel:matProg_progressIndeterminate="true" />
+                    </LinearLayout>
+                </FrameLayout>
+           </LinearLayout>
+
+        </com.xuxu.datatool.widget.RefreshLayout>
+    <!--</android.support.v4.widget.NestedScrollView>-->
+
+</LinearLayout><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/cquptnews.xml -->

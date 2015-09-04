@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/job"
+            android:icon="@drawable/ic_event"
+            android:title="就业信息" />
+        <item
+            android:id="@+id/useBook"
+            android:icon="@drawable/ic_forum"
+            android:title="应用手册" />
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/ic_headset"
+            android:title="关于" />
+        <item
+            android:id="@+id/notify"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="桌面推送" />
+
+    </group>
+
+    <item android:title="leaving in the way">
+        <menu>
+
+            <item
+                android:id="@+id/exit"
+                android:icon="@drawable/ic_dashboard"
+                android:title="退出应用" />
+        </menu>
+    </item>
+
+</menu>
+<!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/menu/drawer_view.xml -->

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--第二部分：主要内容，NestedScrollView和ScrollView基本功能一致，只不过NestedScrollView可以兼容新的控件-->
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cnews_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            style="@style/Widget.CardContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+           >
+            <TextView
+                android:id="@+id/c_news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lines="2"
+                android:layout_alignParentLeft="true"
+                android:lineSpacingMultiplier="1.2"
+                android:ellipsize="end"
+                android:text="李银国校长率队访问中国铁塔公司 国家广科院 中国联通学院"
+                android:textColor="@color/primary_text_default_material_light"
+                android:textSize="20.0sp"
+                android:layout_marginRight="16.0dip"
+                />
+            <TextView
+                android:id="@+id/c_news_time"
+                android:layout_below="@+id/c_news_title"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015年07月27日"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+<!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/cnews_card_view.xml -->

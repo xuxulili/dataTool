@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/frame_banner">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="175dp"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/indicator1"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/indicator_unchecked" />
+
+            <ImageView
+                android:id="@+id/indicator2"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/indicator_unchecked" />
+
+            <ImageView
+                android:id="@+id/indicator3"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/indicator_unchecked" />
+
+            <ImageView
+                android:id="@+id/indicator4"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/indicator_unchecked" />
+
+            <ImageView
+                android:id="@+id/indicator5"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@mipmap/indicator_unchecked" />
+        </LinearLayout>
+    </FrameLayout>
+    <TextView
+    android:id="@+id/recyclerView_title"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:text="重邮新闻"
+    android:gravity="center|left"
+    android:layout_marginLeft="10dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+    </LinearLayout>
+<!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/header.xml -->
