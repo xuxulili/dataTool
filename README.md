@@ -1,12 +1,11 @@
 #ScreenShot
 <img src="./screenshot/2.jpg" width="30%" height="30%">
 <img src="./screenshot/3.jpg" width="30%" height="30%">
-
 <img src="./screenshot/4.jpg" width="30%" height="30%">
-<img src="./screenshot/5.jpg" width="30%" height="30%">
 
+<img src="./screenshot/5.jpg" width="30%" height="30%">
 <img src="./screenshot/6.jpg" width="30%" height="30%">
-<img src="./screenshot/loading.png" width="30%" height="30%">
+<img src="./screenshot/loading.png" width="20%" height="20%">
 
 #后续更新计划
 - 添加第三方登录，收藏，评论模块
