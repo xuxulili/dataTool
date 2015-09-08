@@ -30,4 +30,4 @@
         android:textSize="@dimen/md_content_textsize"
         tools:text="Title" />
 
-</LinearLayout><!-- From: file:/Users/afollestad/Projects/material-dialogs/library/src/main/res/layout/md_simplelist_item.xml --><!-- From: file:/E:/src/dataTool/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.3.1/res/layout/md_simplelist_item.xml -->
+</LinearLayout><!-- From: file:/Users/afollestad/Projects/material-dialogs/library/src/main/res/layout/md_simplelist_item.xml --><!-- From: file:/E:/code/dataTool/dataTool/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.3.1/res/layout/md_simplelist_item.xml -->

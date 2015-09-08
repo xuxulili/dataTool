@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/E:/src/dataTool/app/build/intermediates/exploded-aar/com.android.support/design/22.2.0/res/values-v21/values-v21.xml -->
+    <!-- From: file:/E:/code/dataTool/dataTool/app/build/intermediates/exploded-aar/com.android.support/design/22.2.0/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <dimen name="navigation_padding_top_default">24dp</dimen>
-    <!-- From: file:/E:/src/dataTool/app/src/main/res/values-v21/styles.xml -->
+    <!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/values-v21/styles.xml -->
     <eat-comment/>
     <style name="AppBaseThemeTwo" parent="android:Theme.Material">
         <item name="android:windowBackground">@color/transparent_background</item>
@@ -40,7 +40,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-    <!-- From: file:/E:/src/dataTool/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-v21/values-v21.xml -->
+    <!-- From: file:/E:/code/dataTool/dataTool/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
     <style name="Base.TextAppearance.AppCompat.Body1" parent="android:TextAppearance.Material.Body1"/>
@@ -260,7 +260,7 @@
     <style name="Base.Widget.AppCompat.TextView.SpinnerItem" parent="android:Widget.Material.TextView.SpinnerItem"/>
     <style name="Base.Widget.AppCompat.Toolbar.Button.Navigation" parent="android:Widget.Material.Toolbar.Button.Navigation">
     </style>
-    <!-- From: file:/E:/src/dataTool/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.3.1/res/values-v21/values-v21.xml -->
+    <!-- From: file:/E:/code/dataTool/dataTool/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.3.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <style name="MD_Dark" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
@@ -284,7 +284,7 @@
         <item name="md_btn_neutral_selector">@drawable/md_btn_selector_ripple</item>
         <item name="md_btn_negative_selector">@drawable/md_btn_selector_ripple</item>
     </style>
-    <!-- From: file:/E:/src/dataTool/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-v21/values-v21.xml -->
+    <!-- From: file:/E:/code/dataTool/dataTool/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme.Material">
         <item name="android:windowNoTitle">true</item>

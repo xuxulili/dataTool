@@ -1,92 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:fitsSystemWindows="true">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffffff">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/webAppBar"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_web_toolbar"
+        <!--<android.support.design.widget.CollapsingToolbarLayout-->
+        <!--android:id="@+id/collapsing_web_toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--app:contentScrim="?attr/colorPrimary"-->
+        <!--app:expandedTitleMarginStart="48dp"-->
+        <!--app:expandedTitleMarginEnd="54dp">-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageTool"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:background="#ff86a8ff"-->
+        <!--app:layout_collapseMode="parallax"-->
+        <!--app:layout_collapseParallaxMultiplier="0.6" />-->
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_web"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="54dp">
+            android:layout_height="?attr/actionBarSize"
+            android:title="重邮极客"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_collapseMode="pin" />
 
-            <ImageView
-                android:id="@+id/imageTool"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:background="#ff86a8ff"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.6" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_web"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:title="重邮极客"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
+        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
 
     </android.support.design.widget.AppBarLayout>
     <!--在NestedScrollView不要使用Margin padding，无法控制，不过在他的子控件中可以使用-->
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-        <LinearLayout
+    <!--<android.support.v4.widget.NestedScrollView-->
+    <!--android:id="@+id/nestedScrollView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:background="#ffffff"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!-->-->
 
-            style="@style/Widget.CardContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="24dp"
-            >
+    <LinearLayout
+        android:layout_below="@+id/webAppBar"
+        style="@style/Widget.CardContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="4dp">
+
         <ProgressBar
             android:id="@+id/pb"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
             android:layout_height="8dip"
             android:indeterminateOnly="false"
-            android:max="100"
-             >
-        </ProgressBar>
+            android:max="100"></ProgressBar>
+
         <WebView
-        android:id="@+id/webView"
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!--这个空白的view用于修复NestedScrollView中的内容不满一屏出现的bug-->
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="500dp"-->
+        <!--android:background="#ffffff"/>-->
+    </LinearLayout>
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-            <!--这个空白的view用于修复NestedScrollView中的内容不满一屏出现的bug-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:background="#ffffff"/>
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
+        android:layout_height="0.5dp"
+        android:layout_above="@+id/layout_button"
+        android:background="#ff0f0f0f"/>
+    <RelativeLayout
+        android:id="@+id/layout_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="#ffffffff">
 
-        android:id="@+id/webView_share"
-        android:src="@android:drawable/ic_menu_share"
-        app:backgroundTintMode="multiply"
-        app:layout_anchor="@id/webAppBar"
-        app:layout_anchorGravity="bottom|end|right"></android.support.design.widget.FloatingActionButton>
-</android.support.design.widget.CoordinatorLayout>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_toLeftOf="@+id/now_job"
+            android:layout_marginRight="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"/>
+        <ImageView
+            android:id="@+id/now_job"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_home"
+            />
+        <ImageView
+            android:id="@+id/forward"
+            android:layout_toRightOf="@+id/now_job"
+            android:layout_marginLeft="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_forward"/>
+        </RelativeLayout>
+</RelativeLayout>

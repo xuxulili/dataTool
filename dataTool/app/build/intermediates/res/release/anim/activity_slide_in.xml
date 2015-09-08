@@ -4,4 +4,4 @@
         android:fromXDelta="100%p"
         android:toXDelta="0%p"
         android:duration="300"/>
-</set><!-- From: file:/E:/src/dataTool/app/src/main/res/anim/activity_slide_in.xml -->
+</set><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/anim/activity_slide_in.xml -->

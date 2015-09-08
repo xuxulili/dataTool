@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/8/15.
  */
-public class WeatherActivity extends SwipeBackActivity{
+public class WeatherActivity extends AppCompatActivity{
     private ImageView imageView;
     private TextView cityName;
     private TextView wedec;
@@ -79,6 +79,7 @@ public class WeatherActivity extends SwipeBackActivity{
         searchText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                editPlace="";
                 //排除找不到城市，程序死掉BUG，如何检索不到新网址，网址不变，并且告知用户网址没变，没有找到所要城市
                 //关闭输入法
                 InputMethodManager inputMethodManager = (InputMethodManager)
@@ -86,18 +87,15 @@ public class WeatherActivity extends SwipeBackActivity{
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
                         .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 editPlace = editText.getText().toString();
-
-                loading.setVisibility(View.VISIBLE);
-                new WeatherAsyncTask().execute();
-
-//                editText.setText("");
-
+                   loading.setVisibility(View.VISIBLE);
+                   new WeatherAsyncTask().execute();
             }
         });
            //调用enter键
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                editPlace="";
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
@@ -228,25 +226,19 @@ public class WeatherActivity extends SwipeBackActivity{
         @Override
         protected void onPostExecute(List<Weather> weathers) {
             super.onPostExecute(weathers);
-            initData(weathers);
+            if(weathers!=null&&weathers.size()>0){
+                initData(weathers);
+            }else{
+                Toast.makeText(app.getContext(),"对不起，你的城市没有数据！",Toast.LENGTH_SHORT).show();
+            }
             char[] length = editPlace.toCharArray();
             if(length.length==0){
 
             }else if(length.length==1) {
-                Toast.makeText(WeatherActivity.this,"没有城市名为一个字",Toast.LENGTH_SHORT).show();
+                Toast.makeText(app.getContext(),"没有城市名为一个字",Toast.LENGTH_SHORT).show();
             }else if(today.getWeatherCityName().equals("重庆")){
-                Toast.makeText(WeatherActivity.this,"对不起，你的城市没有数据！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(app.getContext(),"对不起，你的城市没有数据！",Toast.LENGTH_SHORT).show();
             }
         }
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        InputMethodManager inputMethodManager = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
-                .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        overridePendingTransition(R.anim.base_slide_right_out,0);
-    }
-
 }

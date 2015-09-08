@@ -7,4 +7,4 @@
     android:gravity="center_horizontal"
     android:layout_gravity="center"
     android:textAppearance="@style/Base.TextAppearance.AppCompat.Title">
-</TextView><!-- From: file:/E:/src/dataTool/app/src/main/res/layout/cnews_details_title.xml -->
+</TextView><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/cnews_details_title.xml -->

@@ -3,4 +3,4 @@
     android:id="@+id/cNew_sumTitle"
     android:layout_width="match_parent"
     android:layout_height="35dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Title"></TextView><!-- From: file:/E:/src/dataTool/app/src/main/res/layout/cnew_sum_title.xml -->
+    android:textAppearance="@style/TextAppearance.AppCompat.Title"></TextView><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/cnew_sum_title.xml -->

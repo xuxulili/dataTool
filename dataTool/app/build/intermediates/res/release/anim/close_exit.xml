@@ -8,4 +8,4 @@
         android:fromAlpha="1.0"
         android:toAlpha="0.0"
         android:duration="1000" />
-</set><!-- From: file:/E:/src/dataTool/app/src/main/res/anim/close_exit.xml -->
+</set><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/anim/close_exit.xml -->

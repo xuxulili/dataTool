@@ -4,5 +4,5 @@
     <translate android:duration="600" android:fillAfter="true" android:fromYDelta="100.0%"
                android:toYDelta="0.0"/>
     <alpha android:duration="600" android:fillAfter="true" android:fromAlpha="0"
-           android:toAlpha="1"/>
-</set><!-- From: file:/E:/src/dataTool/app/src/main/res/anim/item_bottom_in.xml -->
+    android:toAlpha="1"/>
+</set><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/anim/item_bottom_in.xml -->

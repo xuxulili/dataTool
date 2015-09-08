@@ -22,4 +22,4 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="数据加载中……" />
-</LinearLayout> <!-- From: file:/E:/src/dataTool/app/src/main/res/layout/loading_dialog.xml -->
+</LinearLayout> <!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/loading_dialog.xml -->

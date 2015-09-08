@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: E:\\src\\dataTool\\app\\src\\main\\aidl\\com\\xuxu\\datatool\\ALDLService.aidl
+ * Original file: E:\\code\\dataTool\\dataTool\\app\\src\\main\\aidl\\com\\xuxu\\datatool\\ALDLService.aidl
  */
 package com.xuxu.datatool;
 public interface ALDLService extends android.os.IInterface

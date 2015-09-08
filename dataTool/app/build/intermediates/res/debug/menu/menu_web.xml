@@ -4,11 +4,11 @@
     tools:context="com.socks.jiandan.ui.FreshNewsDetailActivity">
 
 
-    <!--<item android:id="@+id/action_share"-->
-        <!--android:icon="@drawable/ic_share_white_16dp"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="分享"-->
-        <!--app:showAsAction="always"/>-->
+    <item android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_white_16dp"
+        android:orderInCategory="100"
+        android:title="分享"
+        app:showAsAction="never"/>
     <item android:id="@+id/action_look"
         android:icon="@drawable/ic_menu_send"
         android:orderInCategory="100"

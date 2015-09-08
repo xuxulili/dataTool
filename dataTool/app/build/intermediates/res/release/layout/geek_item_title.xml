@@ -28,4 +28,4 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
             </LinearLayout>
     </android.support.v7.widget.CardView>
-</LinearLayout><!-- From: file:/E:/src/dataTool/app/src/main/res/layout/geek_item_title.xml -->
+</LinearLayout><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/geek_item_title.xml -->

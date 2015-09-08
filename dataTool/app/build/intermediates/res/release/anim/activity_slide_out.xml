@@ -3,5 +3,6 @@
     <translate
         android:fromXDelta="0%p"
         android:toXDelta="100%p"
-        android:duration="300"/>
-</set><!-- From: file:/E:/src/dataTool/app/src/main/res/anim/activity_slide_out.xml -->
+        android:duration="300"
+        android:fillAfter="true"/>
+</set><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/anim/activity_slide_out.xml -->

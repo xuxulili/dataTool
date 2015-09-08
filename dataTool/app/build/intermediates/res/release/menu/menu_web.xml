@@ -4,15 +4,15 @@
     tools:context="com.socks.jiandan.ui.FreshNewsDetailActivity">
 
 
-    <item android:id="@+id/action_share"
-        android:icon="@drawable/ic_share_white_16dp"
-        android:orderInCategory="100"
-        android:title="分享"
-        app:showAsAction="always"/>
+    <!--<item android:id="@+id/action_share"-->
+        <!--android:icon="@drawable/ic_share_white_16dp"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="分享"-->
+        <!--app:showAsAction="always"/>-->
     <item android:id="@+id/action_look"
         android:icon="@drawable/ic_menu_send"
         android:orderInCategory="100"
         android:title="查看原文"
         app:showAsAction="never"/>
 
-</menu><!-- From: file:/E:/src/dataTool/app/src/main/res/menu/menu_web.xml -->
+</menu><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/menu/menu_web.xml -->

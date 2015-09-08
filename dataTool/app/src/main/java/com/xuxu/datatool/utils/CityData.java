@@ -213,7 +213,7 @@ public class CityData {
     public static String SN = "西安市　 咸阳市　 宝鸡市　 汉中市　 渭南市　 安康市　 榆林市　 商洛市　 延安市　 铜川市";
     public static String XG = "香港";
     public static String ZJ = "温州市　 宁波市　 杭州市　 台州市　 嘉兴市　 金华市　 湖州市　 绍兴市　 舟山市　 丽水市　 衢州市　";
-    public static String HE = "石家庄市　 唐山市　 保定市　 邯郸市　 邢台市　 河北区　 沧州市　 秦皇岛市　 张家口市　 衡水市　 廊坊市　 承德市";
+    public static String HE = "石家庄市　 唐山市　 保定市　 邯郸市　 邢台市　 　 沧州市　 秦皇岛市　 张家口市　 衡水市　 廊坊市　 承德市";
     public static String SH = "上海市   松江区　 宝山区　 金山区　 嘉定区　 南汇区　 青浦区　  浦东区　 奉贤区　 闵行区　　 崇明县　";
     public static String HA = "郑州市　 南阳市　 新乡市　 安阳市　 洛阳市　 信阳市　 平顶山市　 周口市　 商丘市　 开封市　 焦作市　 驻马店市　 濮阳市　 三门峡市　 漯河市　 许昌市　 鹤壁市　 济源市　";
     public static String JS = "苏州市　 徐州市　 盐城市　 无锡市　 南京市　 南通市　 连云港市　 常州市　 扬州市　 镇江市　 淮安市　 泰州市　 宿迁市　";

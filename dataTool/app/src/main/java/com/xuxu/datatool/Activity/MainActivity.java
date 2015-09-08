@@ -263,8 +263,13 @@ public class MainActivity extends AppCompatActivity {
                                                 public void onPositive(MaterialDialog dialog) {
                                                     if (NetWorkUtil.isNetWorkConnected(MainActivity.this)) {
                                                         noNetWorkDialog2.dismiss();
-                                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://job.cqupt.edu.cn"));
-
+//                                                        http://job.cqupt.edu.cn/#job:2
+//                                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://job.cqupt.edu.cn/#job:2"));
+                                                        Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("url","http://job.cqupt.edu.cn/#job:1");
+                                                        bundle.putString("getTitle","就业信息需求");
+                                                        intent.putExtras(bundle);
                                                         startActivity(intent);
                                                         //必须在startactity之后调用，第一个为打开activity的动画，第二个为退出所打开activity的动画
                                                         overridePendingTransition(R.anim.base_slide_right_in, 0);

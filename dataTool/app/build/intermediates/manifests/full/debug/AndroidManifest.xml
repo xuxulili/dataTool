@@ -40,7 +40,7 @@
         <activity
             android:name="com.xuxu.datatool.Activity.WeatherActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent" />
+            android:theme="@style/RedTheme" />
         <activity
             android:name="com.xuxu.datatool.Activity.JobActivity"
             android:screenOrientation="portrait"

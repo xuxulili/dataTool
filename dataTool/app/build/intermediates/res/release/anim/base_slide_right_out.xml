@@ -6,4 +6,4 @@
         android:fromXDelta="0.0%"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toXDelta="100.0%" />
-</set><!-- From: file:/E:/src/dataTool/app/src/main/res/anim/base_slide_right_out.xml -->
+</set><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/anim/base_slide_right_out.xml -->

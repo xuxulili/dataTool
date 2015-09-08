@@ -2,8 +2,9 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <alpha
-        android:fromAlpha="0.0"
-        android:toAlpha="1.0"
-        android:duration="3000" />
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0"
+        android:fillAfter="true"
+        android:duration="600" />
 </set>
-<!-- From: file:/E:/src/dataTool/app/src/main/res/anim/main_enter.xml -->
+<!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/anim/main_enter.xml -->

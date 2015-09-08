@@ -1,6 +1,8 @@
 <?xml version="1.1" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xuxu.datatool">
+    package="com.xuxu.datatool"
+    android:versionCode="2"
+    android:versionName="1.1">
 
     <application
         android:allowBackup="true"
@@ -23,7 +25,7 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Activity.WeatherActivity"
-            android:theme="@style/AppTheme.Transparent"
+            android:theme="@style/RedTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Activity.JobActivity"

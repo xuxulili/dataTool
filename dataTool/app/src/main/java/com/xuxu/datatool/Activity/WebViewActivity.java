@@ -14,12 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.xuxu.datatool.R;
 import com.xuxu.datatool.utils.GetData;
@@ -35,6 +39,10 @@ public class WebViewActivity extends AppCompatActivity {
     private String getTitle;
     private ProgressBar pb;
     private FloatingActionButton floatingActionButton;
+    private String now_url;
+    private ImageView back;
+    private ImageView forward;
+    private ImageView home;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,27 +53,30 @@ public class WebViewActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_web);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.webView_share);
+//        floatingActionButton = (FloatingActionButton) findViewById(R.id.webView_share);
         Bundle bundle = getIntent().getExtras();
         getUrl = "";
         url = "";
-        getUrl = bundle.getString("getUrl");
-        url = bundle.getString("url");
-        if(!url.contains("http")) {
-            url = "http://www.cqupt.edu.cn"+url;
+        if (bundle.getString("getUrl") != null) {
+            url = bundle.getString("getUrl");
+        } else if (bundle.getString("url") != null) {
+            url = bundle.getString("url");
+        }
+        if (!url.contains("http")) {
+            url = "http://www.cqupt.edu.cn" + url;
         }
 //        Log.e("weburl", url);
         getTitle = bundle.getString("getTitle");
 
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)
-                findViewById(R.id.collapsing_web_toolbar);
-        if (getTitle!=null) {
-            collapsingToolbarLayout.setTitle(getTitle);
+//        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)
+//                findViewById(R.id.collapsing_web_toolbar);
+        if (getTitle != null) {
+            getSupportActionBar().setTitle(getTitle);
         } else {
-            collapsingToolbarLayout.setTitle("重邮新闻");
+            getSupportActionBar().setTitle("重邮新闻");
         }
-        NestedScrollView nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
-        nestedScrollView.smoothScrollTo(0,0);
+//        NestedScrollView nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
+//        nestedScrollView.smoothScrollTo(0,0);
         pb = (ProgressBar) findViewById(R.id.pb);
         pb.setMax(100);
 
@@ -78,81 +89,142 @@ public class WebViewActivity extends AppCompatActivity {
         webSettings.setAllowFileAccess(true);
         //设置支持缩放
         //初始显示模式
-
-
-
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setSaveFormData(false);
+        webSettings.setSavePassword(false);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setAppCacheMaxSize(10240);
         webView.clearCache(true);
-
-        if(getUrl!=null) {
-//            Log.e("getUrl", getUrl);
-            //加载需要显示的网页
-//            webSettings.setUseWideViewPort(true);
-            webSettings.setLoadWithOverviewMode(true);
-            webSettings.setDisplayZoomControls(false);
-//            webSettings.setSupportZoom(true);
-// 设置出现缩放工具
-            webSettings.setBuiltInZoomControls(true);
-//扩大比例的缩放
-//            webSettings.setUseWideViewPort(true);
-//自适应屏幕
-//            webSettings.setLoadWithOverviewMode(true);
-//            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-            webView.loadUrl(getUrl);
-        }else{
-//            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-            //去掉按钮
-//            webSettings.setUseWideViewPort(true);
-            webSettings.setLoadWithOverviewMode(true);
-            webSettings.setDisplayZoomControls(false);
-//            webSettings.setSupportZoom(true);
-// 设置出现缩放工具
-            webSettings.setBuiltInZoomControls(true);
-            webView.loadUrl(url);
-        }
-        //设置Web视图
-        webView.setWebChromeClient(new webViewClient());
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String shareText = "";
-                if (getTitle != null) {
-                    if (getUrl != null) {
-                        shareText = getTitle + getUrl;
-                    } else {
-                        shareText = getTitle + url;
-                    }
+        webView.setWebViewClient(webViewClient);
+        webView.setWebChromeClient(new wcc());
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (v.getId()) {
+                    case R.id.webView:
+                        webView.requestFocus();
+                        break;
                 }
-
-                if (shareText!=null) {
-                    ShareUtil.shareText(WebViewActivity.this, shareText);
-                }
+                return false;
             }
         });
+        back = (ImageView) findViewById(R.id.back);
+        forward = (ImageView) findViewById(R.id.forward);
+        home = (ImageView) findViewById(R.id.now_job);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goForward();
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.loadUrl(url);
+            }
+        });
+//            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        //去掉按钮
+//            webSettings.setUseWideViewPort(true);
+
+
+//            webSettings.setSupportZoom(true);
+// 设置出现缩放工具
+        webView.loadUrl(url);
+        now_url = getUrl;
     }
+
+    WebViewClient webViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            pb.setVisibility(View.VISIBLE);
+            view.loadUrl(url);
+            now_url=url;
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if(isFinishing()){
+                pb.setVisibility(View.GONE);
+            }
+        }
+    };
+
+    //Web视图
+    private class wcc extends WebChromeClient {
+//       为webView添加进度条
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            pb.setProgress(newProgress);
+            if (newProgress == 100) {
+                pb.setVisibility(View.GONE);
+            }
+            super.onProgressChanged(view, newProgress);
+        }
+
+        public void onRequestFocus(WebView view) {
+            super.onRequestFocus(view);
+            view.requestFocus();
+
+        }
+    }
+
+    //-------------------------------------------
+
+    /**
+     * 后退
+     */
+    private void goBack() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            Toast.makeText(app.getContext(), "已经是第一页", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //-------------------------------------------
+
+    /**
+     * 前进
+     */
+    private void goForward() {
+        if (webView.canGoForward()) {
+            webView.goForward();
+        } else {
+            Toast.makeText(app.getContext(), "已经是最后一页", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
-//        if(item.getItemId() == R.id.action_share) {
-//            String shareText = "";
-//            if (getTitle != null) {
-//                if (getUrl != null) {
-//                    shareText = getTitle + getUrl;
-//                } else {
-//                    shareText = getTitle + url;
-//                }
-//            }
-//
-//            if (shareText!=null) {
-//                ShareUtil.shareText(this, shareText);
-//            }
-//        }
-        if(item.getItemId()==R.id.action_look){
-            if (getUrl != null) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getUrl));
-                startActivity(intent);
-            } else {
+        if (item.getItemId() == R.id.action_share) {
+            String shareText = "";
+            if (getTitle != null) {
+                if (url != null) {
+                    shareText = getTitle + url;
+                }
+            }
+
+            if (shareText != null) {
+                ShareUtil.shareText(this, shareText);
+            }
+        }
+        if (item.getItemId() == R.id.action_look) {
+            if (url != null) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
             }
@@ -164,25 +236,5 @@ public class WebViewActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_web, menu);
         return true;
-    }
-
-
-    //Web视图
-    private class webViewClient extends WebChromeClient {
-//       为webView添加进度条
-
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            pb.setProgress(newProgress);
-            if(newProgress==100){
-                pb.setVisibility(View.GONE);
-            }
-            super.onProgressChanged(view, newProgress);
-        }
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-//        overridePendingTransition(R.anim.activity_fade_out, R.anim.activity_fade_in);
     }
 }

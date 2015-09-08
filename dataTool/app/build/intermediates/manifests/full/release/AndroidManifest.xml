@@ -26,7 +26,7 @@
         <activity
             android:name="com.xuxu.datatool.Activity.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/RedTheme" >
+            android:theme="@style/WelcomeTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,6 +42,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent" />
         <activity
+            android:name="com.xuxu.datatool.Activity.JobActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
             android:name="com.xuxu.datatool.Activity.CNewsDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent" />
@@ -51,7 +55,7 @@
         <activity
             android:name="com.xuxu.datatool.Activity.WebViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent" />
+            android:theme="@style/WebTheme" />
         <activity
             android:name="com.xuxu.datatool.Activity.DesActivity"
             android:theme="@android:style/Theme.Dialog" />
