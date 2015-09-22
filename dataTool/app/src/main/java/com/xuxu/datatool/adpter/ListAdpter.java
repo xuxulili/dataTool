@@ -77,7 +77,7 @@ public class ListAdpter extends BaseAdapter {
         }
         holder.textView_content.setText(cData.get(i).getcTime().toString());
         holder.textView_title.setText(cData.get(i).getcTitle().toString());
-        holder.textView_title.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                    Log.e("uri", cData.get(i).getcUrl().toString());

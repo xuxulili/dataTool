@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Message;
 import android.provider.Contacts;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -30,11 +31,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.xuxu.datatool.Activity.GetDataFromWebFragment.OnArticleSelectedListener;
 import com.xuxu.datatool.R;
 import com.xuxu.datatool.adpter.TabFragmentAdapter;
 
@@ -42,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Handler;
 
 import com.xuxu.datatool.data.NotesDB;
 import com.xuxu.datatool.utils.ChineseUtil;
@@ -60,8 +67,8 @@ android.support.design.widget.CoordinatorLayout	超级FrameLayout
 android.support.design.widget.AppBarLayout	MD风格的滑动Layout
 android.support.design.widget.CollapsingToolbarLayout	可折叠MD风格ToolbarLayout*/
 //调用系统方法 @android:drawable/ic_menu_send
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements OnArticleSelectedListener{
+    private ImageView welcomeImageView;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private Toolbar toolbar;
@@ -89,24 +96,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActivityManager.addActivity(this);
         /*1、Style（风格）
         Layout（布局）
         Activity（代码）
         如果你想要通过toolbar.setTitle(“主标题”);设置Toolbar的标题，你必须在调用它之前调用如下代码：
         getSupportActionBar().setDisplayShowTitleEnabled(false);*/
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-
+        welcomeImageView = (ImageView) findViewById(R.id.welcome);
+        initDialog();
         //第一视图为CoordinatorLayout导致navigation无法显示
-        ChineseUtil.getUrl("丰城", this);
         initToolBar();
         initNavigationView();
         initTabLayout();
         initFloatingButton();
-        initDialog();
-        initViewPager();
-    }
 
+        initViewPager();
+
+    }
+    private android.os.Handler welComeHandler = new android.os.Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(welcomeImageView.getVisibility()==View.VISIBLE){
+                Animation animation = AnimationUtils.loadAnimation(welcomeImageView.getContext(), R
+                        .anim.welcome_slide_left);
+                welcomeImageView.startAnimation(animation);
+                welcomeImageView.setVisibility(View.INVISIBLE);
+            }
+        }
+    };
+    @Override
+    public void onArticleSelected(boolean success) {
+        if(success) {
+            welComeHandler.sendEmptyMessageDelayed(0, 2000);
+        }
+    }
     @Override
     protected void onDestroy() {
         ActivityManager.removeActivity(this);
@@ -135,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolBar() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
@@ -156,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDialog() {
         if (!NetWorkUtil.isNetWorkConnected(this)) {
-
+//            welComeHandler.sendEmptyMessageDelayed(0,1500);
             if (noNetWorkDialog == null) {
                 noNetWorkDialog = new MaterialDialog.Builder(MainActivity.this)
                         .title("无网络连接")
@@ -346,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
 //                                setAlarmOne();
 //                                aManager.cancel(pi);//用于取消闹钟
                                 break;
+
                             case R.id.exit:
                                 finish();
                                 break;
@@ -462,25 +486,29 @@ public class MainActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                 Log.e("设置的时间", String.valueOf(hourOfDay));
                 Log.e("设置的时间", String.valueOf(minute));
-                aManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
+                aManager = (AlarmManager) getSystemService(app.getContext().ALARM_SERVICE);
                 Intent intent = new Intent();
                 intent.setAction("com.test.BC_ACTION");
                 intent.putExtra("msg", "该去开会啦！");
                 pi = PendingIntent.getBroadcast(MainActivity.this, 0,
-                        intent, 0);
-                Calendar calendar = Calendar.getInstance();
-//                c.setTimeInMillis(System.currentTimeMillis());
+                        intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                calendar.setTimeInMillis(System.currentTimeMillis());
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
                 calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);//分钟数，月份会有偏移
-//                aManager.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(), pi);
+                calendar.set(Calendar.MILLISECOND, 0);
+//                calendar.set(Calendar.SECOND, 0);
+//                calendar.set(Calendar.MILLISECOND, 0);//分钟数，月份会有偏移
+//                aManager.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(), pi);  + hourOfDay + ":" + minute+":" +
                 aManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
-                Snackbar.make(navigationView, "后台推送设置成功，时间为" + hourOfDay + ":" + minute, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(navigationView, "后台推送设置成功，时间为" +calendar.getTime(), Snackbar.LENGTH_LONG).show();
             }
         }, cal.get(Calendar.HOUR_OF_DAY),
                 cal.get(Calendar.MINUTE),
                 false);
         dialog.show();
     }
+
+
 }

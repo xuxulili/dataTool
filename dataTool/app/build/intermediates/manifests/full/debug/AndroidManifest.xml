@@ -23,20 +23,28 @@
         android:allowBackup="true"
         android:icon="@mipmap/datatool3"
         android:label="@string/app_name" >
+
+        <!-- <activity -->
+        <!-- android:name=".Activity.WelcomeActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/WelcomeTheme"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity
-            android:name="com.xuxu.datatool.Activity.WelcomeActivity"
+            android:name="com.xuxu.datatool.Activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/WelcomeTheme" >
+            android:theme="@style/RedTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.xuxu.datatool.Activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/RedTheme" />
         <activity
             android:name="com.xuxu.datatool.Activity.WeatherActivity"
             android:screenOrientation="portrait"

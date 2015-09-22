@@ -30,7 +30,7 @@ public class MyReceiver extends BroadcastReceiver {
         int hour = time.hour;
         int minute = time.minute;
         int second = time.second;
-        String t =String.valueOf(time.hour) + String.valueOf(time.minute)+ String.valueOf(time.second) + "";
+        String t =String.valueOf(time.hour) + String.valueOf(time.minute)+"";
         Intent intent1 = new Intent(context,DesService.class);
         context.startService(intent1);
     }

@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.xuxu.datatool.Model.GeekNews;
 import com.xuxu.datatool.R;
@@ -37,10 +38,11 @@ public class DesService extends Service {
         super.onCreate();
     }
 
+
     @Override
-    public void onStart(Intent intent, int startId) {
-        Log.e("服务启动", "");
-        super.onStart(intent, startId);
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        flags = START_REDELIVER_INTENT;
+        return START_REDELIVER_INTENT;
     }
 
     private void sendNotification(String title, String content,String url) {
@@ -63,7 +65,7 @@ public class DesService extends Service {
                         // bar后Activity，本例子中的NotififyMessage的TextView中显示的标题
                 .setContentText(content)// TextView中显示的详细内容
                 .setContentIntent(pendingIntent2) // 关联PendingIntent
-                .setNumber(1) // 在TextView的右方显示的数字，可放大图片看，在最右侧。这个number同时也起到一个序列号的左右，如果多个触发多个通知（同一ID），可以指定显示哪一个。
+                // 在TextView的右方显示的数字，可放大图片看，在最右侧。这个number同时也起到一个序列号的左右，如果多个触发多个通知（同一ID），可以指定显示哪一个。
                 .getNotification(); // 需要注意build()是在API level
         // 16及之后增加的，在API11中可以使用getNotificatin()来代替
         notify2.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -91,6 +93,11 @@ public class DesService extends Service {
                 if (times <= 5) {
                     times++;
                     new DesAsyncTask().execute();
+                }else{
+                    Toast.makeText(app.getContext(),"推送失败,重新发送广播",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setAction("com.test.BC_ACTION");
+                    app.getContext().sendBroadcast(intent);
                 }
             }
         }

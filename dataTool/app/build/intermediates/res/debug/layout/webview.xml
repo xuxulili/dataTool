@@ -96,22 +96,22 @@
             android:id="@+id/back"
             android:layout_toLeftOf="@+id/now_job"
             android:layout_marginRight="70dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_back"/>
         <ImageView
             android:id="@+id/now_job"
             android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_home"
             />
         <ImageView
             android:id="@+id/forward"
             android:layout_toRightOf="@+id/now_job"
             android:layout_marginLeft="70dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_forward"/>
         </RelativeLayout>
 </RelativeLayout><!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/webview.xml -->

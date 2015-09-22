@@ -94,46 +94,70 @@ public class GetDataFromWebFragment extends Fragment {
     private IntentFilter counterActionFilter;
     protected ActionBar mActionBar;
     private int retry = 0;
+    private boolean success = false;
 
     public GetDataFromWebFragment() {
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (getUserVisibleHint()) {
-            isVisible = true;
-
-            if (NetWorkUtil.isNetWorkConnected(getActivity()) && isVisible && !hasIt) {
-//                Log.e("加载了第1页数据", "");
-                swipeHandler.sendEmptyMessageDelayed(0, 100);
-            } else {
-                networkReceiver=new NetworkReceiver(){
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        super.onReceive(context, intent);
-                        if ((activeInfo!=null&&activeInfo.isAvailable()&&!hasIt)||(wifiInfo.isConnected()&&!hasIt)) {
-                            Toast.makeText(app.getContext(), "网路好了耶，重新获取数据！", Toast.LENGTH_SHORT).show();
-                            hasIt = true;
-                            swipeHandler.sendEmptyMessageDelayed(0, 100);
-                        }
-                    }
-                };
-                counterActionFilter = new IntentFilter();
-                counterActionFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-                getActivity().registerReceiver(networkReceiver,counterActionFilter);
-            }
-        } else {
-            isVisible = false;
-        }
+    OnArticleSelectedListener mListener;
+    public interface OnArticleSelectedListener{
+        public void onArticleSelected(boolean success);
     }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try{
+            mListener =(OnArticleSelectedListener)activity;
+        }catch(ClassCastException e){
+            throw new ClassCastException(activity.toString()+"must implement OnArticleSelectedListener");
+        }
+        mActionBar = ((AppCompatActivity) activity).getSupportActionBar();
+//        mActionBar.setTitle("IT前沿");
+        View customView = LayoutInflater.from(activity).inflate(R.layout.toolbarlittle, null);
+        mActionBar.setCustomView(customView);
+        customView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(app.getContext(), "....", Toast.LENGTH_SHORT).show();
+                recyclerView.scrollToPosition(0);
+            }
+        });
+    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//
+//        if (getUserVisibleHint()) {
+//            isVisible = true;
+//
+//            if (NetWorkUtil.isNetWorkConnected(getActivity()) && isVisible && !hasIt) {
+////                Log.e("加载了第1页数据", "");
+//                swipeHandler.sendEmptyMessageDelayed(0, 100);
+//            } else {
+//                networkReceiver=new NetworkReceiver(){
+//                    @Override
+//                    public void onReceive(Context context, Intent intent) {
+//                        super.onReceive(context, intent);
+//                        if ((activeInfo!=null&&activeInfo.isAvailable()&&!hasIt)||(wifiInfo.isConnected()&&!hasIt)) {
+//                            Toast.makeText(app.getContext(), "网路好了耶，重新获取数据！", Toast.LENGTH_SHORT).show();
+//                            hasIt = true;
+//                            swipeHandler.sendEmptyMessageDelayed(0, 100);
+//                        }
+//                    }
+//                };
+//                counterActionFilter = new IntentFilter();
+//                counterActionFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+//                getActivity().registerReceiver(networkReceiver,counterActionFilter);
+//            }
+//        } else {
+//            isVisible = false;
+//        }
+//    }
 
     private android.os.Handler swipeHandler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
             pd = createLoadingDialog(getActivity(), "正在加载中");
-            pd.show();
+//            pd.show();
             new FirstAsyncTask().execute(String.valueOf(0));//更新过程实际上是先把数据下载然后存入数据库，统一取出
         }
     };
@@ -161,10 +185,31 @@ public class GetDataFromWebFragment extends Fragment {
 //        String reStart =getArguments().getString("APPReStart");
         mGeekNewsList = new ArrayList<>();
         initView();
+        setFirst();
         //此处为data为空值，由于是子线程，可能这个值并没有来得及改变
     }
-    //github操作完成
-
+    //github操作完成  && isVisible
+    private void setFirst(){
+        if (NetWorkUtil.isNetWorkConnected(getActivity()) && !hasIt) {
+//                Log.e("加载了第1页数据", "");
+            swipeHandler.sendEmptyMessageDelayed(0, 100);
+        } else {
+            networkReceiver=new NetworkReceiver(){
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    super.onReceive(context, intent);
+                    if ((activeInfo!=null&&activeInfo.isAvailable()&&!hasIt)||(wifiInfo.isConnected()&&!hasIt)) {
+                        Toast.makeText(app.getContext(), "网路好了耶，重新获取数据！", Toast.LENGTH_SHORT).show();
+                        hasIt = true;
+                        swipeHandler.sendEmptyMessageDelayed(0, 100);
+                    }
+                }
+            };
+            counterActionFilter = new IntentFilter();
+            counterActionFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            getActivity().registerReceiver(networkReceiver,counterActionFilter);
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -182,6 +227,8 @@ public class GetDataFromWebFragment extends Fragment {
                 recyclerAdapterGeek = new RecyclerAdapterGeek(getActivity(), mGeekNewsList);
                 recyclerView.setAdapter(recyclerAdapterGeek);
                 hasIt = true;
+                success=true;
+                mListener.onArticleSelected(success);
                 if (pd != null) {
                     pd.dismiss();
                 }
@@ -257,9 +304,9 @@ public class GetDataFromWebFragment extends Fragment {
             @Override
             public void onRefresh() {
                 mIsRefreshing = true;
-                if(!hasIt){
-                   new FirstAsyncTask().execute(String.valueOf(0));
-                }else{
+                if (!hasIt) {
+                    new FirstAsyncTask().execute(String.valueOf(0));
+                } else {
                     new FirstAsyncTask().execute(String.valueOf(1));
                 }
 
@@ -270,21 +317,7 @@ public class GetDataFromWebFragment extends Fragment {
                         .getDisplayMetrics()));
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActionBar = ((AppCompatActivity) activity).getSupportActionBar();
-//        mActionBar.setTitle("IT前沿");
-        View customView = LayoutInflater.from(activity).inflate(R.layout.toolbarlittle, null);
-        mActionBar.setCustomView(customView);
-        customView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(app.getContext(), "....", Toast.LENGTH_SHORT).show();
-                recyclerView.scrollToPosition(0);
-            }
-        });
-    }
+
 
     @Override
     public void onResume() {
@@ -426,7 +459,7 @@ public class GetDataFromWebFragment extends Fragment {
             super.onPostExecute(maps);
             if (NetWorkUtil.isNetWorkConnected(getActivity())) {
                 mGeekNewsList.addAll(maps);
-                pd.dismiss();
+//                pd.dismiss();
                 initData(true);
                 mIsRefreshing = false;
                 if (swipeRefreshLayout.isRefreshing()) {

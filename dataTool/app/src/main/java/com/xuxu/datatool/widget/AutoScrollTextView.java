@@ -16,7 +16,6 @@ import android.widget.TextView;
  */
 public class AutoScrollTextView extends TextView implements View.OnClickListener {
     public final static String TAG = AutoScrollTextView.class.getSimpleName();
-
     private float textLength = 0f;//文本长度
     private float viewWidth = 0f;
     private float step = 0f;//文字的横坐标
@@ -31,32 +30,28 @@ public class AutoScrollTextView extends TextView implements View.OnClickListener
         super(context);
         initView();
     }
+
     public AutoScrollTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
+
     public AutoScrollTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();
     }
 
-
-    private void initView()
-    {
+    private void initView() {
         setOnClickListener(this);
     }
 
-
-    public void init(WindowManager windowManager)
-    {
+    public void init(WindowManager windowManager) {
         paint = getPaint();
         text = getText().toString();
         textLength = paint.measureText(text);
         viewWidth = getWidth();
-        if(viewWidth == 0)
-        {
-            if(windowManager != null)
-            {
+        if (viewWidth == 0) {
+            if (windowManager != null) {
                 Display display = windowManager.getDefaultDisplay();
                 viewWidth = display.getWidth();
             }
@@ -68,8 +63,7 @@ public class AutoScrollTextView extends TextView implements View.OnClickListener
     }
 
     @Override
-    public Parcelable onSaveInstanceState()
-    {
+    public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
         SavedState ss = new SavedState(superState);
 
@@ -81,13 +75,12 @@ public class AutoScrollTextView extends TextView implements View.OnClickListener
     }
 
     @Override
-    public void onRestoreInstanceState(Parcelable state)
-    {
+    public void onRestoreInstanceState(Parcelable state) {
         if (!(state instanceof SavedState)) {
             super.onRestoreInstanceState(state);
             return;
         }
-        SavedState ss = (SavedState)state;
+        SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
 
         step = ss.step;
@@ -97,9 +90,11 @@ public class AutoScrollTextView extends TextView implements View.OnClickListener
     public static class SavedState extends BaseSavedState {
         public boolean isStarting = false;
         public float step = 0.0f;
+
         SavedState(Parcelable superState) {
             super(superState);
         }
+
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
@@ -107,36 +102,35 @@ public class AutoScrollTextView extends TextView implements View.OnClickListener
             out.writeFloat(step);
         }
 
-        public static final Creator<SavedState> CREATOR
-                = new Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
 
             public SavedState[] newArray(int size) {
                 return new SavedState[size];
             }
+
             @Override
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
         };
+
         private SavedState(Parcel in) {
             super(in);
             boolean[] b = null;
             in.readBooleanArray(b);
-            if(b != null && b.length > 0)
+            if (b != null && b.length > 0)
                 isStarting = b[0];
             step = in.readFloat();
         }
     }
 
-    public void startScroll()
-    {
+    public void startScroll() {
         isStarting = true;
         invalidate();
     }
 
 
-    public void stopScroll()
-    {
+    public void stopScroll() {
         isStarting = false;
         invalidate();
     }
@@ -144,18 +138,18 @@ public class AutoScrollTextView extends TextView implements View.OnClickListener
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawText(text, temp_view_plus_text_length - step, y, paint);
-        if(!isStarting)
-        {
+        if (!isStarting) {
             return;
         }
         step += 0.5;//0.5为文字滚动速度。
-        if(step > temp_view_plus_two_text_length)
+        if (step > temp_view_plus_two_text_length)
             step = textLength;
         invalidate();
     }
+
     @Override
     public void onClick(View v) {
-        if(isStarting)
+        if (isStarting)
             stopScroll();
         else
             startScroll();

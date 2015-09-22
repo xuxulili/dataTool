@@ -692,11 +692,13 @@ public class GetData {
 //        android.os.Process.killProcess(android.os.Process.myPid());
     }
     //通过URL获取源码
+    @Deprecated
     public static String getCodeString(String url) {
         StringBuffer urlString = null;//只有StringBuffer可以使用append
         InputStream inputStream = null;
         String line = "";
         try {
+
             URL url1 = new URL(url);
             try {
                 HttpURLConnection urlConnection = (HttpURLConnection) url1.openConnection();

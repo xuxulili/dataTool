@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,13 +34,14 @@ import com.xuxu.datatool.utils.ShareUtil;
  * Created by Administrator on 2015/7/30.
  */
 public class WebViewActivity extends AppCompatActivity {
-    private WebView webView;
+
     private String getUrl;
     private String url;
     private String getTitle;
     private ProgressBar pb;
     private FloatingActionButton floatingActionButton;
     private String now_url;
+    private WebView webView;
     private ImageView back;
     private ImageView forward;
     private ImageView home;
@@ -79,69 +81,86 @@ public class WebViewActivity extends AppCompatActivity {
 //        nestedScrollView.smoothScrollTo(0,0);
         pb = (ProgressBar) findViewById(R.id.pb);
         pb.setMax(100);
+        initWebView();
+        now_url = getUrl;
+    }
+    public void initWebView(){
+    webView = (WebView) findViewById(R.id.webView);
+    WebSettings webSettings = webView.getSettings();
 
-        webView = (WebView) findViewById(R.id.webView);
-        WebSettings webSettings = webView.getSettings();
-
-        //设置WebView属性，能够执行Javascript脚本
-        webSettings.setJavaScriptEnabled(true);
-        //设置可以访问文件
-        webSettings.setAllowFileAccess(true);
-        //设置支持缩放
-        //初始显示模式
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setDisplayZoomControls(false);
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setSaveFormData(false);
-        webSettings.setSavePassword(false);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCacheMaxSize(10240);
-        webView.clearCache(true);
-        webView.setWebViewClient(webViewClient);
-        webView.setWebChromeClient(new wcc());
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (v.getId()) {
-                    case R.id.webView:
-                        webView.requestFocus();
-                        break;
-                }
-                return false;
+    //设置WebView属性，能够执行Javascript脚本
+    webSettings.setJavaScriptEnabled(true);
+    //设置可以访问文件
+    webSettings.setAllowFileAccess(true);
+    //设置支持缩放
+    //初始显示模式
+    webSettings.setLoadWithOverviewMode(true);
+    webSettings.setDisplayZoomControls(false);
+    webSettings.setBuiltInZoomControls(true);
+    webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+    webSettings.setSaveFormData(false);
+    webSettings.setSavePassword(false);
+    webSettings.setAppCacheEnabled(true);
+    webSettings.setAppCacheMaxSize(10240);
+    webSettings.setUseWideViewPort(true);
+    webSettings.setLoadWithOverviewMode(true);
+//    int screenDensity = getResources().getDisplayMetrics().densityDpi ;
+//    WebSettings.ZoomDensity zoomDensity = WebSettings.ZoomDensity.MEDIUM ;
+//    switch (screenDensity){
+//        case DisplayMetrics.DENSITY_LOW :
+//            zoomDensity = WebSettings.ZoomDensity.CLOSE;
+//            break;
+//        case DisplayMetrics.DENSITY_MEDIUM:
+//            zoomDensity = WebSettings.ZoomDensity.MEDIUM;
+//            break;
+//        case DisplayMetrics.DENSITY_HIGH:
+//            zoomDensity = WebSettings.ZoomDensity.FAR;
+//            break ;
+//    }
+//    webSettings.setDefaultZoom(zoomDensity);
+    webView.clearCache(true);
+    webView.setWebViewClient(webViewClient);
+    webView.setWebChromeClient(new wcc());
+    webView.setOnTouchListener(new View.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (v.getId()) {
+                case R.id.webView:
+                    webView.requestFocus();
+                    break;
             }
-        });
-        back = (ImageView) findViewById(R.id.back);
-        forward = (ImageView) findViewById(R.id.forward);
-        home = (ImageView) findViewById(R.id.now_job);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goBack();
-            }
-        });
-        forward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goForward();
-            }
-        });
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                webView.loadUrl(url);
-            }
-        });
+            return false;
+        }
+    });
+    back = (ImageView) findViewById(R.id.back);
+    forward = (ImageView) findViewById(R.id.forward);
+    home = (ImageView) findViewById(R.id.now_job);
+    back.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            goBack();
+        }
+    });
+    forward.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            goForward();
+        }
+    });
+    home.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            webView.loadUrl(url);
+        }
+    });
 //            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-        //去掉按钮
+    //去掉按钮
 //            webSettings.setUseWideViewPort(true);
 
 
 //            webSettings.setSupportZoom(true);
 // 设置出现缩放工具
-        webView.loadUrl(url);
-        now_url = getUrl;
-    }
-
+    webView.loadUrl(url);
+}
     WebViewClient webViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

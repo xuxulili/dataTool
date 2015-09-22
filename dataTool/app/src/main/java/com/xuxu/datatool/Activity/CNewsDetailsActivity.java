@@ -39,6 +39,7 @@ public class CNewsDetailsActivity extends SwipeBackActivity {
     private String url;
     private TextView textView;
     private int reTry=0;
+    private String title;
     //    private GestureFrameLayout gestureFrameLayout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class CNewsDetailsActivity extends SwipeBackActivity {
 
         Bundle bundle = getIntent().getExtras();
         url = bundle.getString("url");
+        title = bundle.getString("getTitle");
         if(!url.contains("http")) {
             url = "http://xwzx.cqupt.edu.cn/xwzx/" + url;
         }
@@ -123,12 +125,23 @@ public class CNewsDetailsActivity extends SwipeBackActivity {
             finish();
             return true;
         }
-//        if (item.getItemId() == R.id.action_look) {
+        if (item.getItemId() == R.id.action_share) {
+            ShareUtil.shareText(this,title+url);
 //            ShareUtil.ScreenShot(recyclerView_CNewsDetails);
+            return true;
+        }
+//        if (item.getItemId() == R.id.action_picture) {
+//            ShareUtil.shareText(this,title+url);
 //            return true;
 //        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_details,menu);
+        return true;
     }
 
     class CNewsDetailsAsyncTask extends AsyncTask<String, Void, List<CNewsDetails>> {

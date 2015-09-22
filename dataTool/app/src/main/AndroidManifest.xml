@@ -9,20 +9,26 @@
         android:name=".Activity.app"
         android:icon="@mipmap/datatool3"
         android:label="@string/app_name">
+        <!--<activity-->
+            <!--android:name=".Activity.WelcomeActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/WelcomeTheme">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
-            android:name=".Activity.WelcomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/WelcomeTheme">
+            android:name=".Activity.MainActivity"
+            android:theme="@style/RedTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.MainActivity"
-            android:theme="@style/RedTheme"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Activity.WeatherActivity"
             android:theme="@style/RedTheme"

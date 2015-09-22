@@ -574,7 +574,6 @@ public class CQUPTNews extends Fragment {
             } else {
 //                Toast.makeText(getActivity(), "学校主页抽风了！得不到照片", Toast.LENGTH_SHORT).show();
             }
-            final int pos = position;
             final int finalPosition = position;
             view.setOnClickListener(new View.OnClickListener() {
                                         @Override
