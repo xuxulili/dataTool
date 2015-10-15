@@ -127,6 +127,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.CVie
 
                     context.startActivity(intent);
 
+
                     //                new Thread(){
                     //                    @Override
                     //                    public void run() {

@@ -46,6 +46,7 @@
         <color name="light_grey">#ffbebebe</color>
         <color name="light_grey_1">#FFEEEEEE</color>
         <color name="light">#ffffff</color>
+        <color name="blue_welcome">#2196f3</color>
 
 
         <color name="drawer_scrim_color">#88EEEEEE</color>

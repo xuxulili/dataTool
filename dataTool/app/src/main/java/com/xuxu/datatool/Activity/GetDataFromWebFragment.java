@@ -98,29 +98,32 @@ public class GetDataFromWebFragment extends Fragment {
 
     public GetDataFromWebFragment() {
     }
+
     OnArticleSelectedListener mListener;
-    public interface OnArticleSelectedListener{
+
+    public interface OnArticleSelectedListener {
         public void onArticleSelected(boolean success);
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try{
-            mListener =(OnArticleSelectedListener)activity;
-        }catch(ClassCastException e){
-            throw new ClassCastException(activity.toString()+"must implement OnArticleSelectedListener");
+        try {
+            mListener = (OnArticleSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + "must implement OnArticleSelectedListener");
         }
-        mActionBar = ((AppCompatActivity) activity).getSupportActionBar();
-//        mActionBar.setTitle("IT前沿");
-        View customView = LayoutInflater.from(activity).inflate(R.layout.toolbarlittle, null);
-        mActionBar.setCustomView(customView);
-        customView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(app.getContext(), "....", Toast.LENGTH_SHORT).show();
-                recyclerView.scrollToPosition(0);
-            }
-        });
+//        mActionBar = ((AppCompatActivity) activity).getSupportActionBar();
+////        mActionBar.setTitle("IT前沿");
+//        View customView = LayoutInflater.from(activity).inflate(R.layout.toolbarlittle, null);
+//        mActionBar.setCustomView(customView);
+//        customView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Toast.makeText(app.getContext(), "....", Toast.LENGTH_SHORT).show();
+//                recyclerView.scrollToPosition(0);
+//            }
+//        });
     }
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -188,17 +191,18 @@ public class GetDataFromWebFragment extends Fragment {
         setFirst();
         //此处为data为空值，由于是子线程，可能这个值并没有来得及改变
     }
+
     //github操作完成  && isVisible
-    private void setFirst(){
+    private void setFirst() {
         if (NetWorkUtil.isNetWorkConnected(getActivity()) && !hasIt) {
 //                Log.e("加载了第1页数据", "");
             swipeHandler.sendEmptyMessageDelayed(0, 100);
         } else {
-            networkReceiver=new NetworkReceiver(){
+            networkReceiver = new NetworkReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     super.onReceive(context, intent);
-                    if ((activeInfo!=null&&activeInfo.isAvailable()&&!hasIt)||(wifiInfo.isConnected()&&!hasIt)) {
+                    if ((activeInfo != null && activeInfo.isAvailable() && !hasIt) || (wifiInfo.isConnected() && !hasIt)) {
                         Toast.makeText(app.getContext(), "网路好了耶，重新获取数据！", Toast.LENGTH_SHORT).show();
                         hasIt = true;
                         swipeHandler.sendEmptyMessageDelayed(0, 100);
@@ -207,13 +211,15 @@ public class GetDataFromWebFragment extends Fragment {
             };
             counterActionFilter = new IntentFilter();
             counterActionFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-            getActivity().registerReceiver(networkReceiver,counterActionFilter);
+            getActivity().registerReceiver(networkReceiver, counterActionFilter);
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
     }
+
     /**
      * 处理联网结果，显示在listview
      *
@@ -227,7 +233,7 @@ public class GetDataFromWebFragment extends Fragment {
                 recyclerAdapterGeek = new RecyclerAdapterGeek(getActivity(), mGeekNewsList);
                 recyclerView.setAdapter(recyclerAdapterGeek);
                 hasIt = true;
-                success=true;
+                success = true;
                 mListener.onArticleSelected(success);
                 if (pd != null) {
                     pd.dismiss();
@@ -238,10 +244,7 @@ public class GetDataFromWebFragment extends Fragment {
         }
     }
 
-
     private void initView() {
-//        data = dbt.selectDB9(0);
-
         recyclerView = (RecyclerView) view.findViewById(R.id.two_recyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -317,8 +320,6 @@ public class GetDataFromWebFragment extends Fragment {
                         .getDisplayMetrics()));
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -326,13 +327,14 @@ public class GetDataFromWebFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        if(networkReceiver!=null){
+        if (networkReceiver != null) {
             getActivity().unregisterReceiver(networkReceiver);
         }
         super.onDestroy();
     }
 
     private ShareActionProvider mShareActionProvider;
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
@@ -435,7 +437,7 @@ public class GetDataFromWebFragment extends Fragment {
             mIsRefreshing = true;
             //增加此判断，解决没有网络连接，程序终止问题
 
-            if (NetWorkUtil.isNetWorkConnected(getActivity())) {
+            if (NetWorkUtil.isNetWorkConnected(app.getContext())) {
                 if (geekNewsList != null) {
                     geekNewsList.clear();
                 }
@@ -457,7 +459,7 @@ public class GetDataFromWebFragment extends Fragment {
         @Override
         protected void onPostExecute(List<GeekNews> maps) {
             super.onPostExecute(maps);
-            if (NetWorkUtil.isNetWorkConnected(getActivity())) {
+            if (NetWorkUtil.isNetWorkConnected(app.getContext())) {
                 mGeekNewsList.addAll(maps);
 //                pd.dismiss();
                 initData(true);
@@ -469,7 +471,7 @@ public class GetDataFromWebFragment extends Fragment {
             } else {
                 Toast.makeText(app.getContext(), "无网络连接，请联网！", Toast.LENGTH_SHORT).show();
                 if (swipeRefreshLayout.isRefreshing()) {
-                    if (swipeRefreshLayout!=null) {
+                    if (swipeRefreshLayout != null) {
                         swipeRefreshLayout.setRefreshing(false);
                         swipeRefreshLayout.setEnabled(true);
                     }
@@ -486,7 +488,8 @@ public class GetDataFromWebFragment extends Fragment {
             re = Integer.parseInt(strings[0]);
             times = 1;
             List<GeekNews> FirstList = null;
-            if (NetWorkUtil.isNetWorkConnected(getActivity())) {
+            if (NetWorkUtil.isNetWorkConnected(app.getContext())) {
+                Log.e("开始获取数据","111");
                 FirstList = GetData.getGeekFirst();
             }
             return FirstList;
@@ -559,8 +562,6 @@ public class GetDataFromWebFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                     swipeRefreshLayout.setEnabled(true);
                 }
-//                pd = ProgressDialog.show(getActivity(),"网络连接错误！","请联网！");
-//                finishHandler.sendEmptyMessageDelayed(0,1000);
                 Toast.makeText(app.getContext(), "无网络连接，请联网！", Toast.LENGTH_SHORT).show();
             }
         }
@@ -570,9 +571,11 @@ public class GetDataFromWebFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what >= 0) {
-                if (retry <= 7) {
+                if (retry <= 5) {
                     retry++;
-                    Toast.makeText(app.getContext(), "正在重新刷新IT前沿~~", Toast.LENGTH_SHORT).show();
+                    if (retry==2||retry==4) {
+                        Toast.makeText(app.getContext(), "正在重新刷新IT前沿~~", Toast.LENGTH_SHORT).show();
+                    }
                     new FirstAsyncTask().execute(String.valueOf(msg.what));
                 } else {
                     Toast.makeText(app.getContext(), "重连失败，请检查网络！", Toast.LENGTH_SHORT).show();

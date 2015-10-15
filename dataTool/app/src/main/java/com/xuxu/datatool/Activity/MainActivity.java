@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Message;
 import android.provider.Contacts;
 import android.provider.Settings;
@@ -33,12 +35,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.xuxu.datatool.Activity.GetDataFromWebFragment.OnArticleSelectedListener;
 import com.xuxu.datatool.R;
 import com.xuxu.datatool.adpter.TabFragmentAdapter;
@@ -67,7 +74,7 @@ android.support.design.widget.CoordinatorLayout	超级FrameLayout
 android.support.design.widget.AppBarLayout	MD风格的滑动Layout
 android.support.design.widget.CollapsingToolbarLayout	可折叠MD风格ToolbarLayout*/
 //调用系统方法 @android:drawable/ic_menu_send
-public class MainActivity extends AppCompatActivity implements OnArticleSelectedListener{
+public class MainActivity extends AppCompatActivity implements OnArticleSelectedListener {
     private ImageView welcomeImageView;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
@@ -91,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
     private PendingIntent pi;
     //标识是否点击过一次back退出
     private boolean mIsExit = false;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions options;
+    private FloatingActionButton fab;
+    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,14 +119,20 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
         initNavigationView();
         initTabLayout();
         initFloatingButton();
-
         initViewPager();
-
     }
-    private android.os.Handler welComeHandler = new android.os.Handler(){
+
+    private android.os.Handler welComeHandler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if(welcomeImageView.getVisibility()==View.VISIBLE){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                SystemBarTintManager tintManager = new SystemBarTintManager(MainActivity.this);
+                tintManager.setStatusBarTintResource(R.color.red);
+                tintManager.setStatusBarTintEnabled(true);
+                SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+                frameLayout.setPadding(0, config.getStatusBarHeight(), 0, config.getPixelInsetBottom());
+            }
+            if (welcomeImageView.getVisibility() == View.VISIBLE) {
                 Animation animation = AnimationUtils.loadAnimation(welcomeImageView.getContext(), R
                         .anim.welcome_slide_left);
                 welcomeImageView.startAnimation(animation);
@@ -123,16 +140,24 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
             }
         }
     };
+
     @Override
     public void onArticleSelected(boolean success) {
-        if(success) {
-            welComeHandler.sendEmptyMessageDelayed(0, 2000);
+        if (success) {
+            welComeHandler.sendEmptyMessage(0);
         }
     }
+
     @Override
     protected void onDestroy() {
         ActivityManager.removeActivity(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_right_out);
     }
 
     /*初始化Viewpager*/
@@ -157,7 +182,15 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
     }
 
     private void initToolBar() {
+        frameLayout = (FrameLayout) findViewById(R.id.main_content);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintResource(R.color.blue_welcome);
+            tintManager.setStatusBarTintEnabled(true);
+            SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+            frameLayout.setPadding(0, config.getStatusBarHeight(), 0, config.getPixelInsetBottom());
+        }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
@@ -193,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
                                         Settings.ACTION_WIRELESS_SETTINGS);
                                 startActivity(intent);
                             }
+
                             @Override
                             public void onNegative(MaterialDialog dialog) {
                                 finish();
@@ -220,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
     }
 
     private void initFloatingButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
                                 if (NetWorkUtil.isNetWorkConnected(MainActivity.this)) {
                                     Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
 
-                                    startActivity(intent);
+                                    startActivityForResult(intent, 0);
                                     //必须在startactity之后调用，第一个为打开activity的动画，第二个为退出所打开activity的动画
                                     overridePendingTransition(R.anim.base_slide_right_in, 0);
                                 } else {
@@ -241,6 +275,28 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
                         }).show();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String url = bundle.getString("imgUrl");
+            if (url != null && !url.equals("")) {
+                imageLoader = ImageLoader.getInstance();
+                imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+                int loadingResource = R.drawable.w1;
+                options = new DisplayImageOptions.Builder()
+                        .cacheInMemory(true)
+                        .cacheOnDisk(true)
+                        .bitmapConfig(Bitmap.Config.RGB_565)
+                        .resetViewBeforeLoading(true)
+                        .showImageOnLoading(loadingResource)
+                        .build();
+//                imageLoader.displayImage(url,,options);
+
+            }
+        }
     }
 
     private void setupViewpager(ViewPager viewPager) {
@@ -290,8 +346,8 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
 //                                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://job.cqupt.edu.cn/#job:2"));
                                                         Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
                                                         Bundle bundle = new Bundle();
-                                                        bundle.putString("url","http://job.cqupt.edu.cn/#job:1");
-                                                        bundle.putString("getTitle","就业信息需求");
+                                                        bundle.putString("url", "http://job.cqupt.edu.cn/#job:1");
+                                                        bundle.putString("getTitle", "就业信息需求");
                                                         intent.putExtras(bundle);
                                                         startActivity(intent);
                                                         //必须在startactity之后调用，第一个为打开activity的动画，第二个为退出所打开activity的动画
@@ -387,7 +443,6 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
         return super.onOptionsItemSelected(item);
     }
 
-
     // 用来计算返回键的点击间隔时间
     private long exitTime = 0;
 
@@ -450,19 +505,12 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 showExitDialog();
                 Toast.makeText(app.getContext(), "再按一次后台运行！", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(app.getContext(), "再按一次退出程序！", Toast.LENGTH_SHORT).show();
-//                exitTime = System.currentTimeMillis();
             }
-//            } else {
-//                moveTaskToBack(false);
-////                finish();
-//            }
             return true;
         }
 
         return super.onKeyDown(keyCode, event);
     }
-
 
     private void setAlarmOne() {
         AlarmManager alarmManagerOne = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -502,13 +550,11 @@ public class MainActivity extends AppCompatActivity implements OnArticleSelected
 //                calendar.set(Calendar.MILLISECOND, 0);//分钟数，月份会有偏移
 //                aManager.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(), pi);  + hourOfDay + ":" + minute+":" +
                 aManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
-                Snackbar.make(navigationView, "后台推送设置成功，时间为" +calendar.getTime(), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(navigationView, "后台推送设置成功，时间为" + calendar.getTime(), Snackbar.LENGTH_LONG).show();
             }
         }, cal.get(Calendar.HOUR_OF_DAY),
                 cal.get(Calendar.MINUTE),
                 false);
         dialog.show();
     }
-
-
 }

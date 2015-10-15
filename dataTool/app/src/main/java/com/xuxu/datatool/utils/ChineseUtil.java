@@ -54,7 +54,7 @@ public class ChineseUtil {
         criteria.setBearingRequired(false);
         criteria.setCostAllowed(false);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
-        String cityName = null;
+        String cityName = "";
         // 取得效果最好的criteria
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider == null) {

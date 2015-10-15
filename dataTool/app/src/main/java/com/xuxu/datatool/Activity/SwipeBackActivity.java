@@ -25,7 +25,6 @@ public class SwipeBackActivity extends AppCompatActivity{
         layout.attachToActivity(this);
     }
 
-
     @Override
     public void startActivity(Intent intent) {
         InputMethodManager inputMethodManager = (InputMethodManager)
@@ -36,10 +35,6 @@ public class SwipeBackActivity extends AppCompatActivity{
         overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_right_out);
 //        overridePendingTransition(0, R.anim.base_slide_right_out);
     }
-
-
-
-
     // Press the back button in mobile phone
     @Override
     public void onBackPressed() {

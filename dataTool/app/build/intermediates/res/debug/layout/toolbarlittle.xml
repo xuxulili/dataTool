@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
+    android:fitsSystemWindows="true"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-
     />
 <!-- From: file:/E:/code/dataTool/dataTool/app/src/main/res/layout/toolbarlittle.xml -->

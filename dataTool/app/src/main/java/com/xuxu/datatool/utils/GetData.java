@@ -42,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -81,13 +82,43 @@ public class GetData {
     //    final String CQUPTURL = "http://xwzx.cqupt.edu.cn/xwzx/news_type.php?id=1&page=";
     static final String CQUPTURL = "http://www.cqupt.edu.cn/cqupt/index.shtml";
     final static String CNEEWSDETAILS = "http://xwzx.cqupt.edu.cn/xwzx/news.php?id=28377";
-
+    public static String readString(String url)throws Exception {
+        InputStreamReader isr;
+        String result = "";
+        String line = "";
+        try {
+            URL url1 = new URL(url);
+            HttpURLConnection httpURLConnection = (HttpURLConnection)url1.openConnection();
+//            httpURLConnection.setReadTimeout(5000);
+            isr = new InputStreamReader(httpURLConnection.getInputStream(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            try {
+                while ((line = br.readLine()) != null) {
+                    result += line;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+//        String str = unicodeToUtf8(result);
+        Log.e("getJson",result);
+        return result;
+    }
     final static String Geek = "http://geek.csdn.net/newest";
     public static List<GeekNews> getGeekFirst() {
         //新建一个geekList
         List<GeekNews> geekNewsList = null;
+        String html = "";
         try {
-            Document document = Jsoup.connect(Geek).timeout(3000).get();
+            try {
+                html = readString(Geek);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Document document = Jsoup.parse(html);
+//            Document document = Jsoup.connect(Geek).get();
             geekNewsList = new ArrayList<>();
             Element element_div = document.getElementsByAttributeValue("id", "geek_list").get(0);
             Elements elements_title = document.getElementsByAttributeValue("class", "title");
@@ -127,18 +158,15 @@ public class GetData {
                         Element element_type = elements_type.get(i);
                         int geek_type = Integer.parseInt(element_type.attr("voteid"));
                         geekNews.setJk_type(geek_type);
-//                        Log.e("第一次获取的type", geek_type+"");
+//                        Log.e("第一次获取的type", geek_type + "");
                     }
                     geekNews.setJk_userName("");
-//                    Log.e("第一次list添加前geeknews",geekNews.toString());
+//                    Log.e("第一次list添加前geeknews", geekNews.toString());
                     geekNewsList.add(geekNews);
                 }
 
             }
-        } catch (
-                IOException e
-                )
-
+        } catch (Exception e)
         {
             e.printStackTrace();
         }

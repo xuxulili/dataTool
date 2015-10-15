@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="AppBaseTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+
+                <item name="android:fitsSystemWindows">true</item>
+                <item name="windowActionBar">false</item>
+                <item name="windowNoTitle">true</item>
+                <item name="android:windowTranslucentStatus">true</item>
+                <item name="android:windowTranslucentNavigation">true</item>
+                <item name="android:textColorPrimary">@color/text_color_primary</item>
+                <item name="android:textColorSecondary">@color/text_second_color_primary</item>
+                <item name="android:windowBackground">@color/window_background</item>
+                <item name="searchViewStyle">@style/SearchViewStyle</item>
+                <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextView</item>
+                <item name="popupTheme">@style/popupTheme</item>
+                <item name="popupMenuStyle">@style/popupMenuStyle</item>
+                <item name="android:activatedBackgroundIndicator">@drawable/activated_background
+                </item>
+                <item name="selectableItemBackground">@drawable/selectable_background</item>
+        </style>
+        <style name="RedTheme" parent="AppBaseTheme.Dark">
+                <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+                <item name="colorPrimary">@color/red</item>
+                <item name="colorPrimaryDark">@color/dark_red</item>
+                <item name="colorAccent">@color/accent_red</item>
+        </style>
+        <style name="BlueTheme" parent="AppBaseTheme.Dark">
+                <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+                <item name="colorPrimary">@color/blue</item>
+                <item name="colorPrimaryDark">@color/dark_blue</item>
+                <item name="colorAccent">@color/accent_blue</item>
+        </style>
+</resources>

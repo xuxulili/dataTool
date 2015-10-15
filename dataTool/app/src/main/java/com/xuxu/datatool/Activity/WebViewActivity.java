@@ -3,6 +3,7 @@ package com.xuxu.datatool.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -24,8 +25,10 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.xuxu.datatool.R;
 import com.xuxu.datatool.utils.GetData;
 import com.xuxu.datatool.utils.ShareUtil;
@@ -45,6 +48,7 @@ public class WebViewActivity extends AppCompatActivity {
     private ImageView back;
     private ImageView forward;
     private ImageView home;
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +57,16 @@ public class WebViewActivity extends AppCompatActivity {
 
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_web);
+        relativeLayout = (RelativeLayout) findViewById(R.id.main_content);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintResource(R.color.red);
+            tintManager.setStatusBarTintEnabled(true);
+            SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+            relativeLayout.setPadding(0, config.getStatusBarHeight(), 0, config.getPixelInsetBottom());
+        }
 //        floatingActionButton = (FloatingActionButton) findViewById(R.id.webView_share);
         Bundle bundle = getIntent().getExtras();
         getUrl = "";

@@ -2,6 +2,7 @@ package com.xuxu.datatool.Activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,9 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.xuxu.datatool.Model.CNewsDetails;
 import com.xuxu.datatool.R;
 import com.xuxu.datatool.adpter.CNewsAdapter;
@@ -40,16 +43,25 @@ public class CNewsDetailsActivity extends SwipeBackActivity {
     private TextView textView;
     private int reTry=0;
     private String title;
+    private LinearLayout linearLayout;
     //    private GestureFrameLayout gestureFrameLayout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cnews_details);
 
+        linearLayout = (LinearLayout) findViewById(R.id.main_content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//增加返回图标
         getSupportActionBar().setTitle("重邮头条");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintResource(R.color.red);
+            tintManager.setStatusBarTintEnabled(true);
+            SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+            linearLayout.setPadding(0, 0, 0, config.getPixelInsetBottom());
+        }
 
 //        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)
 //                findViewById(R.id.collapsing_toolbar);

@@ -96,6 +96,7 @@
     <eat-comment/>
     <color name="blue">#2196F3</color>
     <color name="blue_grey">#607D8B</color>
+    <color name="blue_welcome">#2196f3</color>
     <!-- From: file:/E:/code/dataTool/dataTool/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>

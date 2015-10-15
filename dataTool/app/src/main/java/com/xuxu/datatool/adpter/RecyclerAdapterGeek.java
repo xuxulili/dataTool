@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.nostra13.universalimageloader.core.*;
 import com.xuxu.datatool.Activity.WebViewActivity;
+import com.xuxu.datatool.Activity.app;
 import com.xuxu.datatool.Model.GeekNews;
 import com.xuxu.datatool.R;
 import com.xuxu.datatool.data.DataBasetool;

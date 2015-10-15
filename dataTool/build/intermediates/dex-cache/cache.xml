@@ -156,6 +156,13 @@
         <dex dex="E:\code\dataTool\dataTool\app\build\intermediates\pre-dexed\debug\classes-58d8ab6387cde30d847d170069eb258017a7a494.jar" />
     </item>
     <item
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.readystatesoftware.systembartint\systembartint\1.0.3\de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287\systembartint-1.0.3.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287">
+        <dex dex="E:\code\dataTool\dataTool\app\build\intermediates\pre-dexed\debug\systembartint-1.0.3-737be33c92afa3d651417584f62e561120fe5e0c.jar" />
+    </item>
+    <item
         jar="E:\code\dataTool\dataTool\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\classes.jar"
         jumboMode="false"
         revision="22.0.0"
